@@ -1,26 +1,63 @@
-import React from 'react';
+import React, {Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import TodoForm from "./components/TodoForm.js";  
+import Todo from "./components/Todo.js";  
+import { todos } from "./todos.json";
 
-function App() {
-  return (
+
+class App extends Component {
+ constructor () {
+   super ();
+   this.state = {
+     todos 
+   }
+   this.pushearToDo = this.pushearToDo.bind(this);
+   
+ }
+ pushearToDo(todo){
+    this.setState({
+      todos: [...this.state.todos, todo]
+    })
+ }
+
+  render () {
+    var formulario = 
+      <div className="col-md-4"> 
+      <div className="card">
+     <TodoForm pushearToDo={this.pushearToDo}></TodoForm>
+    </div>
+    </div> 
+    ;
+   var todos = this.state.todos.map((todo, i) => { 
+      return (
+        <Todo information={todo}></Todo> 
+      )
+    })
+   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <nav className ="navbar navbar-dark bg-dark">
+     <a href=" " className="text-white">
+     Tareas
+     <span className="badge badge-pill badge-light ml-2">
+      { this.state.todos.length}
+     </span>
+     </a>
+
+     </nav>
+
+     <div className="container">
+     <div className="row mt-4">
+      {formulario}
+      {todos}
+     </div>
+     </div>
+     
+
+        
     </div>
   );
 }
 
-export default App;
+}
+export default  App;
